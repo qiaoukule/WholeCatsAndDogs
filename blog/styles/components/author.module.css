@@ -1,0 +1,17 @@
+.authorDiv {
+    width:80%;
+    background-color: #FFFFFF;
+    padding: 2rem;
+    margin-top: 100px;
+    text-align: center;
+    line-height: 1.5rem;
+}
+.iconSpan {
+    font-size: 25px; 
+    color: '#08c';
+    padding-left:15px ;
+}
+.toolTipStyle {
+   /*  position: absolute;
+    left: 5px; */
+}

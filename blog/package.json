@@ -1,0 +1,39 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo 我要提交代码啦",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "echo 我要推送代码啦"
+    }
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.3.0",
+    "antd": "^4.10.2",
+    "axios": "^0.21.1",
+    "egg-cors": "^2.2.3",
+    "highlight": "^0.2.4",
+    "highlight.js": "^10.5.0",
+    "markdown-navbar": "^1.4.3",
+    "marked": "^1.2.7",
+    "next": "10.0.5",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-markdown": "^5.0.3",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.12.10",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "babel-plugin-import": "^1.13.3",
+    "husky": "^4.3.7"
+  }
+}

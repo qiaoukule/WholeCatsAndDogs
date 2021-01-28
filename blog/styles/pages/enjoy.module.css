@@ -1,0 +1,30 @@
+.enjoyDiv {
+    background-color: #ffffff;
+    margin-top: 50px;
+}
+
+/*瀑布流实现*/
+.masonry {
+    width: 800px;
+    margin: 20px auto;
+    columns: 3;
+    column-gap: 15px; 
+}
+
+.item {
+    width: 100%;
+    break-inside: avoid;
+    margin-bottom: 30px; 
+}
+
+.item img {
+    width: 100%;
+}
+
+.item h2 {
+    padding: 4px 0;
+}
+
+.item p {
+    color: #555;
+}

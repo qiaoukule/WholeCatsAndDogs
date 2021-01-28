@@ -1,0 +1,23 @@
+.header {
+    background-color: #333333;
+    padding: 10px;
+}
+
+.title {
+    color: aliceblue;
+    font-size: 1.6rem;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.ant-menu{
+    line-height: 2.6rem;
+    background-color: #333333 !important;
+}
+.ant-menu-item{
+    font-size:.7rem !important;
+    padding-left:1rem;
+    padding-right:1rem;
+    color: white !important;
+}
+
