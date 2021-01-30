@@ -1,4 +1,4 @@
-//配置路由，一个async方法对应一个路径
+//前端配置路由，一个async方法对应一个路径
 module.exports = app => {
     const {router,controller} = app
     router.get("/default/index",controller.default.home.index)

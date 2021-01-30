@@ -38,7 +38,7 @@ function AdminIndex(props) {
                     </Menu.Item>
                     <SubMenu key="sub1" icon={<DesktopOutlined />} title="文章管理">
                         <Menu.Item key="3"> 
-                            <Link to="/AdminIndex/addArticle">添加文章</Link>
+                            <Link to="/addArticle">添加文章</Link>
                          </Menu.Item>
                         <Menu.Item key="4">文章列表</Menu.Item>
                     </SubMenu>
@@ -61,8 +61,8 @@ function AdminIndex(props) {
                         <div>
                             <Switch>
                                {/*  错误 children={AddArticle} */}
-                                <Route path="/AdminIndex/addArticle"  >
-                                    <AddArticle />
+                                <Route path="/addArticle"  >
+                                    <AddArticle  history={props.history}/>
                                 </Route>
                                 <Route path="/AdminIndex/one" children={<h3>One</h3>} />
                                 <Route path="/two" children={<h3>Two</h3>} />

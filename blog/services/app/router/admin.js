@@ -1,0 +1,8 @@
+//后端路由配置
+module.exports = app => {
+    const {router,controller} = app
+    let adminAuthor = app.middleware.adminAuthor()//加上就自动路由守卫了,也可以写高阶组件实现路由守卫
+    router.get("/admin/index",controller.admin.main.index)
+    router.post("/admin/checkLogin",controller.admin.main.checkLogin)
+    router.get("/admin/getTypeInfo",controller.admin.main.getTypeInfo)//想实现路由守卫，但是却失败了，一直重复跳转啊，得了解一下路由守卫去
+}
