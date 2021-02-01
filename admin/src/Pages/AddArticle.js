@@ -9,7 +9,6 @@ const { Option } = Select
 const { TextArea } = Input
 
 function AddArticle(ooo) {
-
     const [articleId, setArticleId] = useState(0)  // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
     const [articleTitle, setArticleTitle] = useState('')   //文章标题
     const [articleContent, setArticleContent] = useState('')  //markdown的编辑内容
@@ -74,6 +73,8 @@ function AddArticle(ooo) {
     }
 
     const saveArticle =()=>{
+       // markedContent()  //先进行转换
+
         if(!selectedType){
             message.error("请选择文章类型")
             return false
@@ -88,8 +89,49 @@ function AddArticle(ooo) {
         else if(!showDate){
             message.error("请选择发布日期")
             return false
-        }  message.success('检验通过');
-
+        } 
+        let dataProps = {}
+        dataProps.type_id = selectedType
+        dataProps.title = articleTitle
+        dataProps.article_content = articleContent
+        dataProps.introduce = introducemd
+      //  dataProps.id =  articleId
+       // let dataText = showDate.replace('-','/')//把字符串转换成时间戳
+        dataProps.addTime = (new Date(showDate).getTime()/1000);
+        if(articleId === 0) { 
+            dataProps.view_count = Math.ceil(Math.random()*100)+1000;
+            axios({
+                method:'post',
+                url:servicePath.addArticle,
+                data:dataProps,
+                withCredentials:true,
+            }).then(res => {
+                setArticleId(res.data.insertId)
+                console.log("--"+res.data.insertId);
+                if(res.data.isSuccess) {
+                    message.success("发布成功！")
+                } else{
+                    message.error("文章发布失败！")
+                }
+            })
+        }
+        else{//修改文章
+            dataProps.id = articleId
+            axios({
+                method:'post',
+                url:servicePath.updateArticle,
+                data:dataProps,
+                withCredentials:true,
+            }).then(
+                res=>{
+                    if(res.data.isSuccess){
+                        message.success("保存成功！")
+                    } else {
+                        message.error("保存失败！")
+                    }
+                }
+            )
+        }
     }
 
     return (

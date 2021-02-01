@@ -31,6 +31,26 @@ class MainController extends Controller{
         const resType = await this.app.mysql.select('type')//获取type表
         this.ctx.body= { data: resType}
     }
+
+    async addArticle() {
+        let tempAriticle = this.ctx.request.body//接受post传过来的数据
+        const result = await this.app.mysql.insert('article',tempAriticle)//插入数据
+        console.log(result)
+        const insertSuccess = result.affectedRows === 1;//改变的行数
+        const insertId = result.insertId
+        this.ctx.body = {
+            isSuccess : insertSuccess,
+            insertId : insertId
+        }
+    }
+
+    async updateArticle() {
+        let tempArticle = await this.app.mysql.update('article',tempArticle);
+        const updateSuccess = result.affectedRows === 1
+        this.ctx.body = {
+            isSuccess:updateSuccess
+        }
+    }
 }
 
 module.exports = MainController
