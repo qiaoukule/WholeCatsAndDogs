@@ -5,11 +5,12 @@ import {BrowserRouter as Router,Route} from 'react-router-dom'
 import Login from './Login'
 import AdminIndex from './AdminIndex'
 
+
 function Main() {
     return(
         <Router>
             <Route path='/'  exact component={Login} />
-            <Route path='/AdminIndex/' exact  component={AdminIndex} />
+            <Route path='/adminIndex/'   component={AdminIndex} />
         </Router>
     )
 }

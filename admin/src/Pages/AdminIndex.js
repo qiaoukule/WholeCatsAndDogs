@@ -12,6 +12,7 @@ import '../static/css/AdminIndex.css'
 import React, { useState } from 'react';
 import { Route, Link, Switch, BrowserRouter as Router, } from 'react-router-dom';
 import AddArticle from '../Pages/AddArticle'
+import ArticleList from '../Pages/ArticleList'
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -38,9 +39,11 @@ function AdminIndex(props) {
                     </Menu.Item>
                     <SubMenu key="sub1" icon={<DesktopOutlined />} title="文章管理">
                         <Menu.Item key="3"> 
-                            <Link to="/addArticle">添加文章</Link>
+                            <Link to="/addArticle/">添加文章</Link>
                          </Menu.Item>
-                        <Menu.Item key="4">文章列表</Menu.Item>
+                        <Menu.Item key="4">
+                        <Link to="/articleList/">文章列表</Link>
+                        </Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
                         <Menu.Item key="6">Team 1</Menu.Item>
@@ -60,14 +63,15 @@ function AdminIndex(props) {
                     <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                         <div>
                             <Switch>
-                               {/*  错误 children={AddArticle} */}
-                                <Route path="/addArticle"  >
-                                    <AddArticle  history={props.history}/>
+                               {/*  错误 children={AddArticle} */} 
+                               <Route path="/articleList/" exact>
+                                    <ArticleList />
                                 </Route>
-                                <Route path="/AdminIndex/one" children={<h3>One</h3>} />
-                                <Route path="/two" children={<h3>Two</h3>} />
+                                <Route path="/addArticle/"  >
+                                  <AddArticle  history={props.history}/> 
+                                </Route>
+                               
                             </Switch>
-                            {children}
                         </div>
                     </div>
                 </Content>
