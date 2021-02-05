@@ -46,7 +46,7 @@ export default function Home(list) {
                     </Link>
                   </div>
                   <div className={styles.listIcon}>
-                    <span ><EditOutlined /> {item.addTime}</span>
+                    <span ><EditOutlined /> {new Date(item.addTime).toLocaleDateString()}</span>
                     <span><BulbOutlined /> 不定期更新</span>
                     <span><FireOutlined /> 浏览次数：{item.view_count}</span>
                   </div>

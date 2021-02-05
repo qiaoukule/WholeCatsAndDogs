@@ -14,11 +14,13 @@ import Link from 'next/link'
 export default function Report(list) {
 
   const [myList, setList] = useState(list.data)
+ 
 
   useEffect(()=>{
     setList(list.data)
    })
 
+  
   return (
     <div>
       <Head>

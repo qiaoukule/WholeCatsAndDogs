@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import marked from 'marked'
 import '../static/css/AddArticle.css'
 import { Row, Col, Input, Select, Button, DatePicker, message } from 'antd'
+import {  useLocation, useParams, } from 'react-router-dom';
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
 
 const { Option } = Select
 const { TextArea } = Input
 
-function AddArticle(ooo) {
+function AddArticle(props) {
     const [articleId, setArticleId] = useState(0)  // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
     const [articleTitle, setArticleTitle] = useState('')   //文章标题
     const [articleContent, setArticleContent] = useState('')  //markdown的编辑内容
@@ -20,9 +21,19 @@ function AddArticle(ooo) {
     const [typeInfo, setTypeInfo] = useState([]) // 文章类别信息
     const [selectedType, setSelectType] = useState(['请选择类别']) //选择的文章类别
 
+    let {id}  = useParams();
+    let location = useLocation();
+    console.log(id);//undefined
+    console.log(location);
+
     useEffect(() => {
         //进入页面执行一次
         getTypeInfor()
+       /*  let tempId = ooo.match.params.id
+        if(tempId){
+            setArticleId(tempId)
+            getArticleById(tempId)
+        } */
     }, [])
 
     marked.setOptions({
@@ -56,10 +67,10 @@ function AddArticle(ooo) {
             withCredentials: true,//跨域
         }).then(
             res => {
-                if (res.data.data == "请登录") {
+                if (res.data.data === "请登录") {
                     localStorage.getItem('openId')
                     localStorage.removeItem('openId')
-                    ooo.history.push('/')//这里需要父组件传参数进来，不然就是{}，根本跳转不了！！！
+                    props.history.push('/')//这里需要父组件传参数进来，不然就是{}，根本跳转不了！！！
                 } else {
                     setTypeInfo(res.data.data)
                 }
@@ -97,7 +108,8 @@ function AddArticle(ooo) {
         dataProps.introduce = introducemd
       //  dataProps.id =  articleId
        // let dataText = showDate.replace('-','/')//把字符串转换成时间戳
-        dataProps.addTime = (new Date(showDate).getTime()/1000);
+        dataProps.addTime = new Date(showDate);
+
         if(articleId === 0) { 
             dataProps.view_count = Math.ceil(Math.random()*100)+1000;
             axios({
@@ -134,8 +146,26 @@ function AddArticle(ooo) {
         }
     }
 
+    const getArticleById=(id)=>{
+        axios(servicePath.getArticleById(id),{
+            withCredentials:true,
+        }).then(res=>{
+            let articleInfo = res.data.data[0]//是数组
+            setArticleTitle(articleInfo.title)
+            setArticleContent(articleInfo.article_content)
+            let html = marked(articleInfo.article_content)
+            setMarkdownContent(html)
+            setIntroducemd(articleInfo.introduce)
+            let tmpInt = marked(articleInfo.introduce)
+            setIntroducehtml(tmpInt)
+            setShowDate(articleInfo.addTime)
+            setSelectType(articleInfo.typeId)
+        })
+    }
+
     return (
         <div>
+            <span>hhh{id}</span>
             <Row gutter={5}>
                 <Col span={18}>
                     <Row gutter={10}>

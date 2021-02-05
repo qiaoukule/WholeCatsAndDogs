@@ -10,7 +10,7 @@ function Main() {
     return(
         <Router>
             <Route path='/'  exact component={Login} />
-            <Route path='/adminIndex/'   component={AdminIndex} />
+            <Route path='/adminIndex/'  component={AdminIndex} />
         </Router>
     )
 }

@@ -6,11 +6,10 @@ import {
     PieChartOutlined,
     FileOutlined,
     TeamOutlined,
-    UserOutlined,
 } from '@ant-design/icons';
 import '../static/css/AdminIndex.css'
 import React, { useState } from 'react';
-import { Route, Link, Switch, BrowserRouter as Router, } from 'react-router-dom';
+import { Route, Link, Switch, BrowserRouter as Router,useParams } from 'react-router-dom';
 import AddArticle from '../Pages/AddArticle'
 import ArticleList from '../Pages/ArticleList'
 
@@ -21,6 +20,7 @@ function AdminIndex(props) {
 
     const { children, location, loading } = props;
 
+
     const [collapsed, setCollapsed] = useState(false)
 
     const onCollapse = collapsed => {
@@ -28,21 +28,30 @@ function AdminIndex(props) {
         setCollapsed(collapsed)
     };
 
+    const handleClickArticle = e => {
+        console.log(e.key);
+        if (e.key == '3') {
+            props.history.push('/adminIndex/addArticle/')
+        } if (e.key == '4') {
+            props.history.push('/adminIndex/articleList/')
+        }
+    }
+
     return (
-    <Router>
+
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
                 <div className="logo" />
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                     <Menu.Item key="1" icon={<PieChartOutlined />}>
-                        文章管理
+                        首页
                     </Menu.Item>
-                    <SubMenu key="sub1" icon={<DesktopOutlined />} title="文章管理">
-                        <Menu.Item key="3"> 
-                            <Link to="/addArticle/">添加文章</Link>
-                         </Menu.Item>
-                        <Menu.Item key="4">
-                        <Link to="/articleList/">文章列表</Link>
+                    <SubMenu key="sub1" icon={<DesktopOutlined />} onClick={handleClickArticle} title="文章管理" >
+                        <Menu.Item key="3">添加文章
+                               {/*  <Link to="/addArticle/">添加文章</Link> */}
+                        </Menu.Item>
+                        <Menu.Item key="4">文章列表
+                               {/*  <Link to="/articleList/">文章列表</Link> */}
                         </Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
@@ -63,14 +72,15 @@ function AdminIndex(props) {
                     <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                         <div>
                             <Switch>
-                               {/*  错误 children={AddArticle} */} 
-                               <Route path="/articleList/" exact>
-                                    <ArticleList />
+                                <Route path="/adminIndex/articleList/" exact>
+                                    <ArticleList history={props.history} />
                                 </Route>
-                                <Route path="/addArticle/"  >
-                                  <AddArticle  history={props.history}/> 
+                                <Route path="/adminIndex/addArticle/"  >
+                                    <AddArticle history={props.history} />
                                 </Route>
-                               
+                                <Route path="/adminIndex/addArticle/:id"  >
+                                    <AddArticle />
+                                </Route>
                             </Switch>
                         </div>
                     </div>
@@ -78,7 +88,7 @@ function AdminIndex(props) {
                 <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
             </Layout>
         </Layout>
-    </Router>
+
     );
 }
 

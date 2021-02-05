@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { List, Row, Col, Modal, message, Button, Table } from 'antd'
+import { Modal, message, Button, Table } from 'antd'
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
 
@@ -43,6 +43,10 @@ function ArticleList(props) {
         })
     }
 
+    const updateArticle = (id) =>{
+        props.history.push('/adminIndex/addArticle/'+id)
+    }
+
     const columns = [
         {
             title: '文章标题',
@@ -62,7 +66,7 @@ function ArticleList(props) {
             render: (text) => (
                 <div>
                     {text}
-                    <Button type="primary" >修改</Button> &nbsp;
+                    <Button type="primary" onClick={() => updateArticle(text)}>修改</Button> &nbsp;
                     <Button onClick={() => deleteArticle(text)}>删除 </Button>
                 </div>
             ),
@@ -71,13 +75,6 @@ function ArticleList(props) {
     ];
 
     let data = [
-        /*  {
-             key: '1',
-             title: 'John Brown',
-             money: '￥300,000.00',
-             action: '',
-         },*/
-        //怎么把key加上啊？？？？？？？？？
     ];
 
     return (
