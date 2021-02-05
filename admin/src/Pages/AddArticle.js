@@ -6,7 +6,6 @@ import {  useLocation, useParams, } from 'react-router-dom';
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
 
-const { Option } = Select
 const { TextArea } = Input
 
 function AddArticle(props) {
@@ -21,19 +20,18 @@ function AddArticle(props) {
     const [typeInfo, setTypeInfo] = useState([]) // 文章类别信息
     const [selectedType, setSelectType] = useState(['请选择类别']) //选择的文章类别
 
-    let {id}  = useParams();
-    let location = useLocation();
-    console.log(id);//undefined
+   // let {id}  = useParams(); 一直是undefined，太可恶了
+   let location = useLocation();
+   let id = location.pathname.replace(/[^0-9]/ig,"");
     console.log(location);
 
     useEffect(() => {
-        //进入页面执行一次
+        //进入页面执行一次,查看是更新还是添加文章
         getTypeInfor()
-       /*  let tempId = ooo.match.params.id
-        if(tempId){
-            setArticleId(tempId)
-            getArticleById(tempId)
-        } */
+        if(id){
+            setArticleId(id)
+            getArticleById(id)
+        } 
     }, [])
 
     marked.setOptions({
@@ -84,8 +82,6 @@ function AddArticle(props) {
     }
 
     const saveArticle =()=>{
-       // markedContent()  //先进行转换
-
         if(!selectedType){
             message.error("请选择文章类型")
             return false
@@ -106,8 +102,6 @@ function AddArticle(props) {
         dataProps.title = articleTitle
         dataProps.article_content = articleContent
         dataProps.introduce = introducemd
-      //  dataProps.id =  articleId
-       // let dataText = showDate.replace('-','/')//把字符串转换成时间戳
         dataProps.addTime = new Date(showDate);
 
         if(articleId === 0) { 
@@ -119,7 +113,7 @@ function AddArticle(props) {
                 withCredentials:true,
             }).then(res => {
                 setArticleId(res.data.insertId)
-                console.log("--"+res.data.insertId);
+              //  console.log("--"+res.data.insertId);
                 if(res.data.isSuccess) {
                     message.success("发布成功！")
                 } else{
@@ -147,7 +141,7 @@ function AddArticle(props) {
     }
 
     const getArticleById=(id)=>{
-        axios(servicePath.getArticleById(id),{
+        axios(servicePath.getArticleById+id,{
             withCredentials:true,
         }).then(res=>{
             let articleInfo = res.data.data[0]//是数组
@@ -165,7 +159,6 @@ function AddArticle(props) {
 
     return (
         <div>
-            <span>hhh{id}</span>
             <Row gutter={5}>
                 <Col span={18}>
                     <Row gutter={10}>
@@ -190,7 +183,7 @@ function AddArticle(props) {
                                 className="markdown-content"
                                 rows={35}
                                 onChange={changeContent}
-                                placeholder="文章内容"
+                                value={articleContent}
                             />
                         </Col>
                         <Col span={12}>
@@ -213,7 +206,7 @@ function AddArticle(props) {
                         </Col>
                         <Col span="24">
                             <br />
-                            <TextArea rows={4} placeholder="文章简介" onChange={changeIntroduce} onPressEnter={changeIntroduce}></TextArea>
+                            <TextArea rows={4} value={introducemd} placeholder="文章简介" onChange={changeIntroduce} onPressEnter={changeIntroduce}></TextArea>
                             <br /><br />
                             <div className="introduce-html" dangerouslySetInnerHTML={{ __html: '文章简介：' + introducehtml }}></div>
                         </Col>

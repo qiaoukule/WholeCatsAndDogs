@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Modal, message, Button, Table } from 'antd'
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
+import { Route, Link, Switch, BrowserRouter as Router,useParams } from 'react-router-dom';
+import AddArticle from '../Pages/AddArticle'
 
 const { confirm } = Modal
 

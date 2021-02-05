@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import '../static/css/AdminIndex.css'
 import React, { useState } from 'react';
-import { Route, Link, Switch, BrowserRouter as Router,useParams } from 'react-router-dom';
+import { Route, Link, Switch, BrowserRouter as Router,  } from 'react-router-dom';
 import AddArticle from '../Pages/AddArticle'
 import ArticleList from '../Pages/ArticleList'
 
@@ -76,9 +76,9 @@ function AdminIndex(props) {
                                     <ArticleList history={props.history} />
                                 </Route>
                                 <Route path="/adminIndex/addArticle/"  >
-                                    <AddArticle history={props.history} />
+                                    <AddArticle  />
                                 </Route>
-                                <Route path="/adminIndex/addArticle/:id"  >
+                                <Route path="/adminIndex/addArticle/:id">
                                     <AddArticle />
                                 </Route>
                             </Switch>

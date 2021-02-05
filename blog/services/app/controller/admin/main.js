@@ -13,8 +13,6 @@ class MainController extends Controller {
         const sql = " SELECT userName FROM admin_user WHERE userName = '" + userName +
             "' AND password = '" + password + "'"
         const res = await this.app.mysql.query(sql)
-        console.log(res)
-        console.log(res.length);
         if (res.length > 0) {
             //登录成功，进行session缓存
             console.log("正确");
@@ -22,7 +20,6 @@ class MainController extends Controller {
             this.ctx.session.openId = { 'openId': openId }
             this.ctx.body = { 'data': '登录成功', 'openId': openId }
         } else {
-            console.log("错误")
             this.ctx.body = { data: '登陆失败' }
         }
     }
@@ -45,7 +42,8 @@ class MainController extends Controller {
     }
 
     async updateArticle() {
-        let tempArticle = await this.app.mysql.update('article', tempArticle);
+        let tempArticle = this.ctx.request.body
+        const result = await this.app.mysql.update('article', tempArticle);
         const updateSuccess = result.affectedRows === 1
         this.ctx.body = {
             isSuccess: updateSuccess
@@ -77,7 +75,7 @@ class MainController extends Controller {
         'article.title as title,'+
         'article.introduce as introduce,'+
         'article.article_content as article_content,'+
-        "FROM_UNIXTIME(article.addTime,'%Y-%m-%d' ) as addTime,"+
+        "article.addTime as addTime,"+
         'article.view_count as view_count ,'+
         'type.typeName as typeName ,'+
         'type.id as typeId '+

@@ -5,7 +5,9 @@ module.exports = options => {
         if(ctx.session.openId) {
             //有session才是正确登录，才能用下面的接口
             await next()
-        } else {
+        } if (ctx.request.url === '/') {
+            await next();
+          } else {
             ctx.body = {data:'请登录'}
         }
     }

@@ -37,16 +37,13 @@ function Login(props){
             method:'post',
             url:servicePath.checkLogin,
             data:dataProps,
-            withCredentials: true,
-            'Content-Type':'application/json;charset=UTF-8',
-            "Access-Control-Allow-Credentials": true,
-            "Access-Control-Allow-Headers":"Authorization,Origin, X-Requested-With, Content-Type, Accept",
-            "Access-Control-Allow-Methods":"GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS"
+            withCredentials: true
         }).then(
             res => {
                 setIsLoading(false)
                 if(res.data.data == '登录成功') {
                     localStorage.setItem('openId',res.data.openId)
+                    console.log(res.data.openId);
                     /*编程导航*/ 
                     props.history.push('/AdminIndex/')
                 } else {
